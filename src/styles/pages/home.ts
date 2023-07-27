@@ -38,21 +38,13 @@ export const Product = styled("div", {
 		justifyContent: "space-between",
 
 		backgroundColor: 'rgba(0, 0, 0, 0.6)',
+		color: "$white",
 
 		transform: "translateY(110%)",
 		opacity: 0,
 		transition: "all 0.2s ease-in-out",
 
-		strong: {
-			fontSize: "$lg",
-			color: "$gray100"
-		},
-
-		span:{
-			fontSize: "$xl",
-			fontWeight: "bold",
-			color: "$green300",
-		}
+		
 	},
 
 	"&:hover": {
@@ -61,5 +53,41 @@ export const Product = styled("div", {
 			opacity: 1,
 		}
 	}
+
+})
+
+export const ProductInfo = styled("div",{
+	display: "flex",
+	flexDirection: "column",
+	gap: 4,
+	// justifyContent: "center",
+	// alignItems: "center",
+
+	strong: {
+		fontSize: "$lg",
+		color: "$gray100"
+	},
+
+	span:{
+		fontSize: "$xl",
+		fontWeight: "bold",
+		color: "$green300",
+	}
+})
+
+export const ShoppingCartIcon = styled("div",{
+	padding: "0.75rem",
+	backgroundColor: "$green500",
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	borderRadius: 6,
+	color: "$white",
+	// cursor: "pointer",
+
+	// "&:hover":{
+	// 	filter: "brightness(140%)",
+	// 	transition: "0.2s",
+	// },
 
 })
