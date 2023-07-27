@@ -1,3 +1,4 @@
+import { relative } from "path";
 import { styled } from "..";
 
 export const Container = styled("div", {
@@ -18,7 +19,8 @@ export const Header = styled("header", {
 	alignItems: "center"
 })
 
-export const ShoppingCartIcon = styled("div",{
+export const ShoppingCartIcon = styled("button",{
+	border: "none",
 	width: "3rem",
 	height: "3rem",
 	backgroundColor: "$gray800",
