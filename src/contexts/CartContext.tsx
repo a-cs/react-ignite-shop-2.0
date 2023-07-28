@@ -60,7 +60,6 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 
 
 	function addItemToCart(item: IProduct) {
-		console.log("item:", item)
 		const itemInCart = isItemInCart(item.id)
 		if(!itemInCart)
 			dispatch(addNewItemAction(item))

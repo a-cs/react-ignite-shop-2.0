@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
-import { HeaderContainer, ShoppingCartIcon } from "../styles/Components/header";
+import { CircleContainer, HeaderContainer, ShoppingCartIcon } from "../styles/Components/header";
 import { Handbag } from "@phosphor-icons/react";
 import logoImg from "../assets/Logo.svg"
 import { useContext, useState, useEffect } from "react"
@@ -21,7 +21,7 @@ export default function Header() {
 			</Link>
 			<ShoppingCartIcon onClick={toggleShowCart}>
 				<Handbag size={24} />
-				{isClient && cartTotalQuantity !== 0 && <span>{cartTotalQuantity}</span>}
+				{isClient && cartTotalQuantity !== 0 && <CircleContainer>{cartTotalQuantity}</CircleContainer>}
 			</ShoppingCartIcon>
 		</HeaderContainer>
 	)

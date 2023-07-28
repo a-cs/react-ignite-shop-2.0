@@ -1,15 +1,10 @@
-import { useContext, useMemo } from "react"
+import { useContext, useMemo, useState } from "react"
 import { Container, Footer, IconContainer, ItemList, QuantityContainer, ShoppingCartContainer, TotalContainer } from "../styles/Components/shoppingCart";
 import { X } from "@phosphor-icons/react"
 import CartItem from "./cartItem";
 import CartContext from "../contexts/CartContext";
-
-
-const item = {
-	name: "Camiseta Maratona Explorer 2.0",
-	imageUrl: "https://files.stripe.com/links/MDB8YWNjdF8xTllCOU5Ha2RJRzBmSGo3fGZsX3Rlc3Rfak1FYUFDRU93YnRtTXBKQmFYUUlDUUtm00uUP2oMGq",
-	price: "74,90",
-}
+import { IProduct } from "../reducers/Cart/Reducer";
+import axios from "axios";
 
 export default function ShoppingCart() {
 	const { showCart, toggleShowCart, cart, cartTotalQuantity } = useContext(CartContext)
@@ -20,6 +15,29 @@ export default function ShoppingCart() {
 		},
 		0,
 	)},[cart])
+
+	const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
+
+	async function handleCheckout(){
+		const lineItems = cart.map((item:IProduct) => {
+			const {defaultPriceId: price, quantity} = item
+			const lineItem = {price, quantity}
+			return lineItem
+		})
+		try {
+			setIsCreatingCheckoutSession(true)
+			const response = await axios.post("/api/checkout", {
+				lineItems
+			})
+			const { checkoutUrl } = response.data
+
+			window.location.href = checkoutUrl
+		} catch (err) {
+			setIsCreatingCheckoutSession(false)
+			alert("Falha ao direcionar ao checkout")
+		}
+		
+	}
 
 	
 	return (
@@ -54,7 +72,7 @@ export default function ShoppingCart() {
 						}</span>
 					</TotalContainer>
 
-					<button disabled={cart.length === 0}>Finalizar compra</button>
+					<button disabled={cart.length === 0 || isCreatingCheckoutSession} onClick={handleCheckout}>Finalizar compra</button>
 				</Footer>
 			</Container>
 		</ShoppingCartContainer>

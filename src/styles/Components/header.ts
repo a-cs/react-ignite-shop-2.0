@@ -28,17 +28,22 @@ export const ShoppingCartIcon = styled("button",{
 		transition: "0.2s",
 	},
 
-	span:{
-		position:"absolute",
-		right: -7,
-		top: -7,
-		width: 24,
-		height: 24,
-		textAlign:"center",
-		borderRadius: "50%",
-		border: "3px solid $gray900",
-		background: "$green500",
-		color: "$white"
-	}
+	
 
+})
+
+export const CircleContainer = styled("div",{
+	position:"absolute",
+	right: -7,
+	top: -7,
+	width: 24,
+	height: 24,
+	display: "flex",
+	justifyContent: "center",
+	alignItems: "center",
+	borderRadius: "50%",
+	border: "3px solid $gray900",
+	background: "$green500",
+	color: "$white",
+	fontSize: "0.875rem",
 })

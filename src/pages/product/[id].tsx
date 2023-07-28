@@ -22,24 +22,9 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-	const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
-
 	const {addItemToCart} = useContext(CartContext)
 
 	async function handleBuyProduct() {
-		// try {
-		// 	setIsCreatingCheckoutSession(true)
-		// 	const response = await axios.post("/api/checkout", {
-		// 		priceId: product.defaultPriceId
-		// 	})
-		// 	const { checkoutUrl } = response.data
-
-		// 	window.location.href = checkoutUrl
-		// } catch (err) {
-		// 	setIsCreatingCheckoutSession(false)
-		// 	alert("Falha ao direcionar ao checkout")
-		// }
-		// console.log(product.defaultPriceId)
 		const productToAdd: IProduct = {...product, quantity: 1}
 		addItemToCart(productToAdd)
 	}
@@ -62,7 +47,7 @@ export default function Product({ product }: ProductProps) {
 						{product.description}
 					</p>
 
-					<button disabled={isCreatingCheckoutSession} onClick={handleBuyProduct}>Colocar na sacola</button>
+					<button onClick={handleBuyProduct}>Colocar na sacola</button>
 				</ProductDetails>
 			</ProductContainer>
 		</>
