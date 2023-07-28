@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useMemo } from "react"
 import { Container, Footer, IconContainer, ItemList, QuantityContainer, ShoppingCartContainer, TotalContainer } from "../styles/Components/shoppingCart";
 import { X } from "@phosphor-icons/react"
 import CartItem from "./cartItem";
@@ -12,7 +12,16 @@ const item = {
 }
 
 export default function ShoppingCart() {
-	const {showCart, toggleShowCart} = useContext(CartContext)
+	const { showCart, toggleShowCart, cart, cartTotalQuantity } = useContext(CartContext)
+
+	const cartTotalPrice = useMemo(():number => { return cart.reduce(
+		(accumulator, currentValue) => {
+			return accumulator + currentValue.quantity * parseFloat(currentValue.price.replace("R$ ", "").replace(",", "."))
+		},
+		0,
+	)},[cart])
+
+	
 	return (
 		<ShoppingCartContainer isVisible={showCart}>
 			<IconContainer onClick={toggleShowCart}>
@@ -24,19 +33,28 @@ export default function ShoppingCart() {
 				<h1>Sacola de compras</h1>
 
 				<ItemList>
-					<CartItem {...item} />
+					{
+						cart.map(item => {
+							return <CartItem key={item.id} {...item} />
+						})
+					}
 				</ItemList>
 				<Footer>
 					<QuantityContainer>
 						<p>Quantidade</p>
-						<span>3 items</span>
+						<span>{cartTotalQuantity} items</span>
 					</QuantityContainer>
 					<TotalContainer>
 						<p>Valor total</p>
-						<span>R$ 270,00</span>
+						<span>{
+							new Intl.NumberFormat("pt-BR", {
+								style: "currency",
+								currency: "BRL"
+							}).format(cartTotalPrice)
+						}</span>
 					</TotalContainer>
 
-					<button>Finalizar compra</button>
+					<button disabled={cart.length === 0}>Finalizar compra</button>
 				</Footer>
 			</Container>
 		</ShoppingCartContainer>

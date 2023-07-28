@@ -21,7 +21,7 @@ export default function Header() {
 			</Link>
 			<ShoppingCartIcon onClick={toggleShowCart}>
 				<Handbag size={24} />
-				<span>{isClient ? cartTotalQuantity : ""}</span>
+				{isClient && cartTotalQuantity !== 0 && <span>{cartTotalQuantity}</span>}
 			</ShoppingCartIcon>
 		</HeaderContainer>
 	)

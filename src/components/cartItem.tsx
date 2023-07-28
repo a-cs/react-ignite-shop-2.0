@@ -1,12 +1,22 @@
 import Image from "next/image";
+import { useContext } from "react"
 import { ImageContainer, ItemContainer, ItemInfo } from "../styles/Components/cartItem";
+import CartContext from "../contexts/CartContext";
 
 interface CartItemProps {
+	id: string;
 	name: string;
 	imageUrl: string;
 	price: string;
+	quantity: number
 }
-export default function CartItem({name, imageUrl, price }: CartItemProps) {
+export default function CartItem({ id, name, imageUrl, price, quantity }: CartItemProps) {
+	const {removeItem} = useContext(CartContext)
+
+	function handleRemoveItem(){
+		removeItem(id)
+	}
+	
 	return (
 		<ItemContainer>
 			<ImageContainer>
@@ -14,8 +24,11 @@ export default function CartItem({name, imageUrl, price }: CartItemProps) {
 			</ImageContainer>
 			<ItemInfo>
 				<p>{name}</p>
-				<span>{price}</span>
-				<button>Remover</button>
+				<div>
+					<span>{quantity}x</span>
+					<span>{price}</span>
+				</div>
+				<button onClick={handleRemoveItem}>Remover</button>
 			</ItemInfo>
 		</ItemContainer>
 	)

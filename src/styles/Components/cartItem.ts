@@ -24,12 +24,21 @@ export const ImageContainer = styled("div", {
 })
 
 export const ItemInfo = styled("div", {
+	width: "100%",
 	display: "flex",
 	flexDirection: "column",
 
 	p: {
 		color: "$gray300",
 		lineHeight: 1.6,
+	},
+
+	div: {
+		width: "100%",
+		display: "flex",
+		flexDirection: "row",
+		alignItems: "center",
+		justifyContent: "space-between",
 	},
 
 	span: {

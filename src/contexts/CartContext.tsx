@@ -17,8 +17,8 @@ interface CartContextType {
 	showCart: boolean
 	toggleShowCart: () => void
 	addItemToCart: (item: IProduct) => void
-	changeItemQuantity: (itemName: string, quantity: number) => void
-	removeItem: (itemName: string) => void
+	changeItemQuantity: (itemId: string, quantity: number) => void
+	removeItem: (itemId: string) => void
 	removeAllItems: () => void
 }
 
@@ -48,24 +48,32 @@ export function CartContextProvider({ children }: CartContextProviderProps) {
 		0,
 	)
 	const [showCart, setShowCart] = useState(false)
-	console.log("showCart-Context:", showCart)
 
 	function toggleShowCart() {
 		console.log("toggle", showCart)
 		setShowCart(state => !state)
 	}
 
+	function isItemInCart(itemId: string){
+		return cart.find(item => item.id === itemId)
+	}
+
+
 	function addItemToCart(item: IProduct) {
 		console.log("item:", item)
-		dispatch(addNewItemAction(item))
+		const itemInCart = isItemInCart(item.id)
+		if(!itemInCart)
+			dispatch(addNewItemAction(item))
+		else
+			changeItemQuantity(item.id, itemInCart.quantity + 1)
 	}
 
-	function changeItemQuantity(itemName: string, quantity: number) {
-		dispatch(changeItemQuantityAction(itemName, quantity))
+	function changeItemQuantity(itemId: string, quantity: number) {
+		dispatch(changeItemQuantityAction(itemId, quantity))
 	}
 
-	function removeItem(itemName: string) {
-		dispatch(removeItemAction(itemName))
+	function removeItem(itemId: string) {
+		dispatch(removeItemAction(itemId))
 	}
 	function removeAllItems() {
 		dispatch(removeAllItemsAction())
