@@ -1,5 +1,5 @@
 import { GetStaticPaths, GetStaticProps } from "next";
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { ImageContainer, ProductContainer, ProductDetails } from "@/src/styles/pages/product";
 import { stripe } from "../../lib/stripe"
 import Stripe from "stripe";
@@ -7,6 +7,8 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 import axios from "axios";
 import Head from "next/head";
+import CartContext from "@/src/contexts/CartContext";
+import {IProduct} from "@/src/reducers/Cart/Reducer"
 
 interface ProductProps {
 	product: {
@@ -22,20 +24,24 @@ interface ProductProps {
 export default function Product({ product }: ProductProps) {
 	const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
-	async function handleBuyProduct() {
-		try {
-			setIsCreatingCheckoutSession(true)
-			const response = await axios.post("/api/checkout", {
-				priceId: product.defaultPriceId
-			})
-			const { checkoutUrl } = response.data
+	const {addItemToCart} = useContext(CartContext)
 
-			window.location.href = checkoutUrl
-		} catch (err) {
-			setIsCreatingCheckoutSession(false)
-			alert("Falha ao direcionar ao checkout")
-		}
-		console.log(product.defaultPriceId)
+	async function handleBuyProduct() {
+		// try {
+		// 	setIsCreatingCheckoutSession(true)
+		// 	const response = await axios.post("/api/checkout", {
+		// 		priceId: product.defaultPriceId
+		// 	})
+		// 	const { checkoutUrl } = response.data
+
+		// 	window.location.href = checkoutUrl
+		// } catch (err) {
+		// 	setIsCreatingCheckoutSession(false)
+		// 	alert("Falha ao direcionar ao checkout")
+		// }
+		// console.log(product.defaultPriceId)
+		const productToAdd: IProduct = {...product, quantity: 1}
+		addItemToCart(productToAdd)
 	}
 
 	return (

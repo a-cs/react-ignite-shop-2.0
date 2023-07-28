@@ -5,15 +5,24 @@ export const ShoppingCartContainer = styled("div", {
 	height: "100vh",
 
 	backgroundColor: "$gray800",
+	boxShadow: "-4px 0px 30px 0px rgba(0, 0, 0, 0.80)",
 	position: "fixed",
 	right: 0,
+	overflowY: "auto",
 
 	zIndex: 10,
+	transition: "all 0.2s ease-in-out",
 
 	variants: {
 		isVisible: {
-			true: { opacity: 1 },
-			false: { opacity: 0 },
+			true: {
+				transform: "translateX(0%)",
+				opacity: 1,
+			},
+			false: {
+				transform: "translateX(110%)",
+				opacity: 0
+			 },
 		},
 	},
 })
@@ -30,12 +39,14 @@ export const Container = styled("div", {
 		fontSize: "$lg",
 		fontWeight: 700,
 		lineHeight: "160%",
+		marginBottom: "2rem",
 	},
 
 })
 
 export const Footer = styled("footer", {
 	marginTop: "auto",
+	paddingTop: "3rem",
 
 	button: {
 		width: 384,
@@ -119,3 +130,15 @@ export const IconContainer = styled("button", {
 	},
 
 })
+
+export const ItemList = styled("div", {
+	display: "flex",
+	flexDirection: "column",
+	gap: 24,
+	overflowY: "auto",
+	borderRadius: 8,
+	minHeight: 200,
+	maxHeight: "calc(100vh - 405px)",
+	height: "100%",
+})
+
