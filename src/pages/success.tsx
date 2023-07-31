@@ -14,9 +14,8 @@ interface SuccessProps {
 }
 
 export default function Success({ customerName, products }: SuccessProps) {
-	const {removeAllItems} = useContext(CartContext)
-	console.log("products:", products)
-	if(products && customerName){
+	const {removeAllItems, cart} = useContext(CartContext)
+	if(cart.length !== 0 && products && customerName){
 		removeAllItems()
 	}
 	return (
